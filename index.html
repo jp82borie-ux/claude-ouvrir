@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ouverture dans Claude</title>
+<style>
+  body { font-family: system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; margin: 0; color: #29261b; background: #faf9f5; }
+  .box { text-align: center; max-width: 28rem; padding: 2rem; }
+  a { color: #c96442; }
+</style>
+</head>
+<body>
+<div class="box">
+  <p id="msg">Ouverture de la session dans l'application Claude…</p>
+  <p><a id="lien" href="#" hidden>Ouvrir manuellement</a></p>
+</div>
+<script>
+  // Redirige vers une session Claude Code de l'application de bureau (lien claude://)
+  var s = new URLSearchParams(location.search).get('s') || '';
+  var msg = document.getElementById('msg'), lien = document.getElementById('lien');
+  if (/^local_[A-Za-z0-9-]{1,64}$/.test(s)) {
+    var cible = 'claude://code/continue?session=' + s;
+    lien.href = cible; lien.hidden = false;
+    location.href = cible;
+    // Ferme l'onglet une fois l'application ouverte
+    setTimeout(function () { window.close(); }, 1500);
+  } else {
+    msg.textContent = 'Lien de session invalide.';
+  }
+</script>
+</body>
+</html>
